@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.MusicPlayer" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">?attr/colorSurface</item>
+    </style>
+
+    <style name="MusicPlayerIconButton">
+        <item name="android:layout_width">44dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:tint">?attr/colorOnSurface</item>
+    </style>
+
+</resources>

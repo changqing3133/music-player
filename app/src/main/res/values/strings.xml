@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">本地音乐</string>
+
+    <string name="nav_library">曲库</string>
+    <string name="nav_player">正在播放</string>
+
+    <string name="scan_local">扫描本地音乐</string>
+    <string name="scan">扫描</string>
+    <string name="empty_library">还没有歌曲\n点击下方按钮扫描本地音乐</string>
+    <string name="permission_denied">未获得音频读取权限，无法扫描本地音乐</string>
+    <string name="permission_title">需要访问本地音乐</string>
+    <string name="permission_rationale">应用需要读取音频文件的权限，用于扫描和播放本地歌曲。所有数据仅保存在本机，不会上传。</string>
+    <string name="permission_allow">允许</string>
+    <string name="cancel">取消</string>
+
+    <string name="track_subtitle">%1$s · %2$s</string>
+    <string name="unknown_title">未知曲目</string>
+    <string name="unknown_artist">未知艺术家</string>
+
+    <string name="no_track_selected">未选择歌曲</string>
+    <string name="album_art">专辑封面</string>
+    <string name="no_lyrics">暂无歌词\n可将同名 .lrc 文件放入应用歌词目录</string>
+    <string name="lyrics_title">歌词</string>
+    <string name="import_lyrics">导入歌词</string>
+
+    <string name="seek_backward">-10 秒</string>
+    <string name="seek_forward">+10 秒</string>
+    <string name="seek_backward_description">快退 10 秒</string>
+    <string name="seek_forward_description">快进 10 秒</string>
+    <string name="time_zero">00:00</string>
+    <string name="previous">上一首</string>
+    <string name="next">下一首</string>
+    <string name="play_pause">播放 / 暂停</string>
+    <string name="repeat">切换循环模式</string>
+    <string name="shuffle">切换随机播放</string>
+</resources>

@@ -1,0 +1,64 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.example.musicplayer'
+    compileSdk 37
+
+    defaultConfig {
+        applicationId 'com.example.musicplayer'
+        minSdk 24
+        targetSdk 37
+        versionCode 1
+        versionName '1.0.0'
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}
+
+dependencies {
+    // ===== 播放内核 =====
+    def media3Version = '1.11.1'
+    implementation "androidx.media3:media3-exoplayer:${media3Version}"
+    implementation "androidx.media3:media3-session:${media3Version}"
+
+    // ===== UI =====
+    implementation 'androidx.appcompat:appcompat:1.8.0'
+    implementation 'com.google.android.material:material:1.14.0'
+    implementation 'androidx.recyclerview:recyclerview:1.4.0'
+    implementation 'androidx.fragment:fragment:1.9.1'
+
+    // ===== 生命周期 =====
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.11.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.11.0'
+
+    // ===== 数据库 =====
+    implementation 'androidx.room:room-runtime:2.8.5'
+    annotationProcessor 'androidx.room:room-compiler:2.8.5'
+
+    // ===== 测试 =====
+    testImplementation 'junit:junit:4.13.2'
+}

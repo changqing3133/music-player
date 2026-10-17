@@ -1,0 +1,54 @@
+# ===== Gradle =====
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# ===== 本地配置（与机器相关，不提交）=====
+local.properties
+secrets.properties
+keystore.properties
+
+# ===== Android Studio / IntelliJ / VS Code =====
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+captures/
+.navigation/
+
+# ===== 构建产物 =====
+*.apk
+*.aab
+*.aar
+*.ap_
+*.dex
+output-metadata.json
+.release/
+
+# ===== 原生构建 =====
+.externalNativeBuild/
+.cxx/
+obj/
+libs/
+
+# ===== 签名文件 =====
+*.jks
+*.keystore
+!debug.keystore
+
+# ===== 日志与临时文件 =====
+*.log
+*.hprof
+*.tmp
+*.swp
+*~
+
+# ===== 操作系统 =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== Kotlin（当前项目为 Java，保留以防后续引入）=====
+.kotlin/
