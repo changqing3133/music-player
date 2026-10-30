@@ -2,4 +2,5 @@
 <resources>
     <color name="ic_launcher_background">#6750A4</color>
     <color name="album_placeholder">#FF9E9E9E</color>
+    <color name="lock_lyric_background">#071A2B</color>
 </resources>

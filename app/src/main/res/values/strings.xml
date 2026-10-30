@@ -23,6 +23,22 @@
     <string name="no_lyrics">暂无歌词\n可将同名 .lrc 文件放入应用歌词目录</string>
     <string name="lyrics_title">歌词</string>
     <string name="import_lyrics">导入歌词</string>
+    <string name="floating_lyrics">悬浮歌词</string>
+    <string name="floating_lyrics_on">取消悬浮</string>
+    <string name="lock_lyrics">锁屏歌词</string>
+    <string name="lock_lyrics_on">取消锁屏</string>
+    <string name="overlay_permission_hint">需要“显示在其他应用上层”权限，请在系统设置中允许后返回</string>
+    <string name="floating_lyrics_enabled_hint">悬浮歌词已开启，返回桌面或使用其他应用时可见</string>
+    <string name="lock_lyrics_enabled_hint">锁屏歌词已开启，播放中锁屏即会显示</string>
+    <string name="lock_lyric_hint">上滑解锁 · 轻触 × 隐藏歌词</string>
+    <string name="vivo_lock_tip_title">需要 vivo 额外授权</string>
+    <string name="vivo_lock_tip_message">vivo 手机默认会拦截「后台弹出界面」和「锁屏显示」。请进入「应用信息 → 权限 → 查看所有权限」，开启「后台弹出界面」与「锁屏显示」，锁屏歌词才能在锁屏上自动显示。</string>
+    <string name="vivo_lock_tip_settings">去设置</string>
+    <string name="vivo_lock_tip_dismiss">知道了</string>
+    <string name="lock_lyric_close">关闭锁屏歌词</string>
+    <string name="lock_lyric_no_lyrics">暂无歌词</string>
+    <string name="lock_lyric_now_playing">正在播放 · %1$s</string>
+    <string name="lock_lyric_now_playing_artist">正在播放 · %1$s - %2$s</string>
 
     <string name="seek_backward">-10 秒</string>
     <string name="seek_forward">+10 秒</string>

@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 悬浮歌词：TYPE_APPLICATION_OVERLAY；同时为后台拉起锁屏歌词页提供豁免 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".MusicApp"
@@ -37,6 +39,18 @@
                 <data android:mimeType="audio/*" />
             </intent-filter>
         </activity>
+
+        <!-- 锁屏歌词：由播放服务在熄屏时拉起，覆盖在锁屏之上 -->
+        <activity
+            android:name=".ui.LockLyricActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:showWhenLocked="true"
+            android:taskAffinity="com.example.musicplayer.locklyric"
+            android:theme="@style/Theme.MusicPlayer.LockLyric"
+            android:turnScreenOn="false" />
 
         <!-- 导出以支持系统媒体控制、Android Auto 等外部 MediaController -->
         <service

@@ -33,7 +33,18 @@ public final class LyricsRepository {
     }
 
     public static List<LyricLine> load(Context context, TrackEntity track, String title, String artist) {
-        File lyricFile = findLyricFile(context, track, title, artist);
+        return parseFile(findLyricFile(context, track, title, artist));
+    }
+
+    /**
+     * 只查应用歌词目录。播放服务/锁屏页拿不到 Room 实体时使用，标题与
+     * {@link #load(Context, TrackEntity, String, String)} 保持同一命名规则。
+     */
+    public static List<LyricLine> loadByTitle(Context context, String title, String artist) {
+        return parseFile(findLyricFile(context, null, title, artist));
+    }
+
+    private static List<LyricLine> parseFile(File lyricFile) {
         if (lyricFile == null || !lyricFile.isFile() || !lyricFile.canRead()) {
             return Collections.emptyList();
         }

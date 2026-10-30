@@ -2,6 +2,7 @@ package com.example.musicplayer.ui;
 
 import android.app.Application;
 import android.content.ComponentName;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -531,6 +532,13 @@ public class PlayerViewModel extends AndroidViewModel {
                 mainHandler.post(() -> {
                     message.setValue("歌词已导入：" + fileName);
                     loadLyrics(item);
+                    // 通知播放服务重新读取歌词，悬浮/锁屏歌词立即生效
+                    try {
+                        app.startService(new Intent(app, PlaybackService.class)
+                                .setAction(PlaybackService.ACTION_RELOAD_LYRICS));
+                    } catch (Exception ignored) {
+                        // 服务未运行时会随下一次播放自行加载
+                    }
                 });
             } catch (Exception e) {
                 Log.w(TAG, "导入歌词失败", e);

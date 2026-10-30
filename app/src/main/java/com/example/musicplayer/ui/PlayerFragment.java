@@ -1,13 +1,18 @@
 package com.example.musicplayer.ui;
 
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -17,16 +22,21 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.media3.common.Player;
 
+import com.example.musicplayer.MusicApp;
 import com.example.musicplayer.R;
+import com.example.musicplayer.data.Prefs;
 import com.example.musicplayer.databinding.FragmentPlayerBinding;
 import com.example.musicplayer.model.LyricLine;
 import com.example.musicplayer.model.PlayerUiState;
+import com.example.musicplayer.playback.PlaybackService;
 import com.example.musicplayer.util.TimeUtils;
 import com.google.android.material.color.MaterialColors;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class PlayerFragment extends Fragment {
 
@@ -43,6 +53,10 @@ public class PlayerFragment extends Fragment {
 
     private int accentColor;
     private int secondaryColor;
+
+    private Prefs prefs;
+    private boolean pendingFloatingEnable;
+    private boolean pendingLockEnable;
 
     private final ActivityResultLauncher<String[]> lyricPicker =
             registerForActivityResult(new ActivityResultContracts.OpenDocument(), uri -> {
@@ -78,6 +92,10 @@ public class PlayerFragment extends Fragment {
         binding.btnRepeat.setOnClickListener(v -> viewModel.cycleRepeat());
         binding.btnShuffle.setOnClickListener(v -> viewModel.toggleShuffle());
         binding.btnImportLyrics.setOnClickListener(v -> lyricPicker.launch(new String[]{"*/*"}));
+        binding.btnFloatingLyrics.setOnClickListener(v -> onFloatingLyricsClicked());
+        binding.btnLockLyrics.setOnClickListener(v -> onLockLyricsClicked());
+        prefs = ((MusicApp) requireActivity().getApplication()).getPrefs();
+        refreshLyricButtons();
 
         binding.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -117,6 +135,152 @@ public class PlayerFragment extends Fragment {
                 renderLyrics(lastState.lyricLineIndex);
             }
         });
+    }
+
+    // ==================== 悬浮歌词 / 锁屏歌词 ====================
+
+    private void onFloatingLyricsClicked() {
+        boolean enable = !prefs.isFloatingLyricsEnabled();
+        if (enable && !Settings.canDrawOverlays(requireContext())) {
+            pendingFloatingEnable = true;
+            requestOverlayPermission();
+            return;
+        }
+        applyFloatingLyrics(enable);
+        if (enable) {
+            Toast.makeText(requireContext(), R.string.floating_lyrics_enabled_hint,
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void onLockLyricsClicked() {
+        boolean enable = !prefs.isLockLyricsEnabled();
+        if (enable && !Settings.canDrawOverlays(requireContext())) {
+            pendingLockEnable = true;
+            requestOverlayPermission();
+            return;
+        }
+        applyLockLyrics(enable);
+        if (enable) {
+            Toast.makeText(requireContext(), R.string.lock_lyrics_enabled_hint,
+                    Toast.LENGTH_SHORT).show();
+            maybeShowVivoLockTip();
+        }
+    }
+
+    /**
+     * vivo 的 OriginOS 会默认拦截“后台弹出界面”和“锁屏显示”，
+     * 未开启时锁屏歌词页既起不来也盖不住锁屏，这里做一次引导。
+     */
+    private void maybeShowVivoLockTip() {
+        if (prefs == null || prefs.wasVivoLockTipShown() || !isVivoDevice()) {
+            return;
+        }
+        prefs.markVivoLockTipShown();
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.vivo_lock_tip_title)
+                .setMessage(R.string.vivo_lock_tip_message)
+                .setPositiveButton(R.string.vivo_lock_tip_settings,
+                        (dialog, which) -> openAppSettingsPage())
+                .setNegativeButton(R.string.vivo_lock_tip_dismiss, null)
+                .show();
+    }
+
+    private boolean isVivoDevice() {
+        String manufacturer = Build.MANUFACTURER == null
+                ? "" : Build.MANUFACTURER.toLowerCase(Locale.ROOT);
+        String brand = Build.BRAND == null
+                ? "" : Build.BRAND.toLowerCase(Locale.ROOT);
+        return manufacturer.contains("vivo")
+                || brand.contains("vivo")
+                || brand.contains("iqoo");
+    }
+
+    private void openAppSettingsPage() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                Uri.parse("package:" + requireContext().getPackageName()));
+        try {
+            startActivity(intent);
+        } catch (Exception ignored) {
+            // 系统不支持该入口时忽略
+        }
+    }
+
+    private void requestOverlayPermission() {
+        Toast.makeText(requireContext(), R.string.overlay_permission_hint, Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:" + requireContext().getPackageName()));
+        try {
+            startActivity(intent);
+        } catch (Exception e) {
+            pendingFloatingEnable = false;
+            pendingLockEnable = false;
+        }
+    }
+
+    private void applyFloatingLyrics(boolean enable) {
+        prefs.setFloatingLyricsEnabled(enable);
+        sendServiceAction(PlaybackService.ACTION_SET_FLOATING_LYRICS, enable);
+        refreshLyricButtons();
+    }
+
+    private void applyLockLyrics(boolean enable) {
+        prefs.setLockLyricsEnabled(enable);
+        sendServiceAction(PlaybackService.ACTION_SET_LOCK_LYRICS, enable);
+        refreshLyricButtons();
+    }
+
+    private void sendServiceAction(String action, boolean enabled) {
+        Intent intent = new Intent(requireContext(), PlaybackService.class)
+                .setAction(action)
+                .putExtra(PlaybackService.EXTRA_ENABLED, enabled);
+        try {
+            requireContext().startService(intent);
+        } catch (Exception ignored) {
+            // 系统限制后台启动服务时保持界面状态，下次进入应用再同步
+        }
+    }
+
+    private void refreshLyricButtons() {
+        if (binding == null || prefs == null) {
+            return;
+        }
+        int floatingText = prefs.isFloatingLyricsEnabled()
+                ? R.string.floating_lyrics_on : R.string.floating_lyrics;
+        if (binding.btnFloatingLyrics.getTag() == null
+                || (int) binding.btnFloatingLyrics.getTag() != floatingText) {
+            binding.btnFloatingLyrics.setTag(floatingText);
+            binding.btnFloatingLyrics.setText(floatingText);
+        }
+        int lockText = prefs.isLockLyricsEnabled()
+                ? R.string.lock_lyrics_on : R.string.lock_lyrics;
+        if (binding.btnLockLyrics.getTag() == null
+                || (int) binding.btnLockLyrics.getTag() != lockText) {
+            binding.btnLockLyrics.setTag(lockText);
+            binding.btnLockLyrics.setText(lockText);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (binding == null || prefs == null) {
+            return;
+        }
+        if (pendingFloatingEnable && Settings.canDrawOverlays(requireContext())) {
+            pendingFloatingEnable = false;
+            applyFloatingLyrics(true);
+            Toast.makeText(requireContext(), R.string.floating_lyrics_enabled_hint,
+                    Toast.LENGTH_SHORT).show();
+        }
+        if (pendingLockEnable && Settings.canDrawOverlays(requireContext())) {
+            pendingLockEnable = false;
+            applyLockLyrics(true);
+            Toast.makeText(requireContext(), R.string.lock_lyrics_enabled_hint,
+                    Toast.LENGTH_SHORT).show();
+            maybeShowVivoLockTip();
+        }
+        refreshLyricButtons();
     }
 
     private void renderState(PlayerUiState state) {
@@ -168,6 +332,7 @@ public class PlayerFragment extends Fragment {
         binding.btnShuffle.setAlpha(state.shuffleEnabled ? 1.0f : 0.4f);
 
         renderLyrics(state.lyricLineIndex);
+        refreshLyricButtons();
     }
 
     private void rebuildLyricViews() {
