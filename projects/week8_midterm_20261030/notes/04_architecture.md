@@ -1,1 +1,0 @@
-架构分四层。最上面是界面：MainActivity 承载三个页面和底部导航，曲库页负责扫描和列表，播放页负责控制、歌词和进度。命令交给 PlayerViewModel，它通过 MediaController 这个 Binder 桥发命令，再把服务回传的状态汇聚成 LiveData。最下面是数据层：PlaybackService 持有唯一的 ExoPlayer 实例，LibraryRepository 管 Room 和 MediaStore，LyricsRepository 只管 LRC 文件。层与层之间只走 playTrack、seekTo、next、scanLibrary 这些明确接口，谁也不直接持有对方的引擎。

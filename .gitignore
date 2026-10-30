@@ -52,3 +52,7 @@ desktop.ini
 
 # ===== Kotlin（当前项目为 Java，保留以防后续引入）=====
 .kotlin/
+
+# ===== 课程材料（仅本地保存，不提交/不上传）=====
+docs/
+projects/
