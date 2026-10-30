@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="Microsoft YaHei, Arial, sans-serif" data-pptx-page-role="content">
+  <rect id="p06-bg" data-pptx-role="background" x="0" y="0" width="1280" height="720" fill="#071A2B"/>
+  <rect id="p06-frame" data-pptx-role="decoration" x="48" y="48" width="1184" height="624" fill="none" stroke="#24455F" stroke-opacity="0.7" stroke-width="1"/>
+  <line id="p06-grid-h1" data-pptx-role="decoration" x1="0" y1="80" x2="1280" y2="80" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p06-grid-h2" data-pptx-role="decoration" x1="0" y1="160" x2="1280" y2="160" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p06-grid-h3" data-pptx-role="decoration" x1="0" y1="240" x2="1280" y2="240" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p06-grid-h4" data-pptx-role="decoration" x1="0" y1="320" x2="1280" y2="320" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p06-grid-h5" data-pptx-role="decoration" x1="0" y1="400" x2="1280" y2="400" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p06-grid-h6" data-pptx-role="decoration" x1="0" y1="480" x2="1280" y2="480" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p06-grid-h7" data-pptx-role="decoration" x1="0" y1="560" x2="1280" y2="560" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p06-grid-h8" data-pptx-role="decoration" x1="0" y1="640" x2="1280" y2="640" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p06-grid-v1" data-pptx-role="decoration" x1="160" y1="0" x2="160" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p06-grid-v2" data-pptx-role="decoration" x1="320" y1="0" x2="320" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p06-grid-v3" data-pptx-role="decoration" x1="480" y1="0" x2="480" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p06-grid-v4" data-pptx-role="decoration" x1="640" y1="0" x2="640" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p06-grid-v5" data-pptx-role="decoration" x1="800" y1="0" x2="800" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p06-grid-v6" data-pptx-role="decoration" x1="960" y1="0" x2="960" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p06-grid-v7" data-pptx-role="decoration" x1="1120" y1="0" x2="1120" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+
+  <text id="p06-chrome-tl" data-pptx-role="footer" x="72" y="66" font-family="Consolas, monospace" font-size="16" letter-spacing="1.5" fill="#7C93A9">FIG. 06 / W08-MIDTERM</text>
+  <text id="p06-chrome-tr" data-pptx-role="footer" x="1208" y="66" text-anchor="end" font-family="Consolas, monospace" font-size="16" letter-spacing="1.5" fill="#7C93A9">ANDROID · LOCAL PLAYBACK</text>
+  <text id="p06-chrome-bl" data-pptx-role="footer" x="72" y="700" font-size="16" fill="#7C93A9">嵌入式手机终端开发技术 · 第八周中期汇报</text>
+  <text id="p06-chrome-br" data-pptx-role="page-number" x="1208" y="700" text-anchor="end" font-family="Consolas, monospace" font-size="16" fill="#7C93A9">06 / 10</text>
+
+  <g id="title-block" data-pptx-bounds="72 90 1136 130">
+    <text x="72" y="118" font-family="Consolas, monospace" font-size="18" letter-spacing="2" fill="#22D3EE">06 / ENVIRONMENT</text>
+    <text x="72" y="180" font-size="48" font-weight="bold" fill="#E6F7FF">怎么保证三个人的环境一致？</text>
+    <use data-icon="tabler-outline/terminal" x="1148" y="132" width="40" height="40" fill="#22D3EE" stroke-width="1.5"/>
+  </g>
+
+  <g id="lede" data-pptx-bounds="72 230 1100 45">
+    <text x="72" y="258" font-size="24" fill="#CBD5E1">版本写进文件、命令写进脚本、检查交给 CI——环境差异在提交前就被消掉。</text>
+  </g>
+
+  <g id="versions" data-pptx-bounds="72 296 540 264">
+    <text x="72" y="314" font-family="Consolas, monospace" font-size="18" letter-spacing="1" fill="#22D3EE">VERSION MATRIX</text>
+    <text x="72" y="358" font-size="22" fill="#CBD5E1">JDK</text>
+    <text x="604" y="358" text-anchor="end" font-family="Consolas, monospace" font-size="22" fill="#E6F7FF">25</text>
+    <line x1="72" y1="374" x2="612" y2="374" stroke="#24455F" stroke-width="1"/>
+    <text x="72" y="406" font-size="22" fill="#CBD5E1">Gradle</text>
+    <text x="604" y="406" text-anchor="end" font-family="Consolas, monospace" font-size="22" fill="#E6F7FF">9.6.0</text>
+    <line x1="72" y1="422" x2="612" y2="422" stroke="#24455F" stroke-width="1"/>
+    <text x="72" y="454" font-size="22" fill="#CBD5E1">Android Gradle Plugin</text>
+    <text x="604" y="454" text-anchor="end" font-family="Consolas, monospace" font-size="22" fill="#E6F7FF">9.4.0</text>
+    <line x1="72" y1="470" x2="612" y2="470" stroke="#24455F" stroke-width="1"/>
+    <text x="72" y="502" font-size="22" fill="#CBD5E1">compileSdk</text>
+    <text x="604" y="502" text-anchor="end" font-family="Consolas, monospace" font-size="22" fill="#E6F7FF">37</text>
+    <line x1="72" y1="518" x2="612" y2="518" stroke="#24455F" stroke-width="1"/>
+    <text x="72" y="550" font-size="22" fill="#CBD5E1">minSdk</text>
+    <text x="604" y="550" text-anchor="end" font-family="Consolas, monospace" font-size="22" fill="#E6F7FF">24</text>
+  </g>
+
+  <g id="consistency" data-pptx-bounds="664 292 544 268">
+    <text x="664" y="314" font-size="24" font-weight="bold" fill="#E6F7FF">一致性靠三件事</text>
+    <text x="664" y="368" font-family="Consolas, monospace" font-size="18" fill="#22D3EE">01</text>
+    <text x="700" y="368" font-size="22" font-weight="bold" fill="#E6F7FF">Wrapper 与版本目录</text>
+    <text x="700" y="392" font-size="18" fill="#7C93A9">Gradle 9.6.0 · 依赖集中声明</text>
+    <text x="664" y="440" font-family="Consolas, monospace" font-size="18" fill="#22D3EE">02</text>
+    <text x="700" y="440" font-size="22" font-weight="bold" fill="#E6F7FF">分支 + 提交钩子 + PR</text>
+    <text x="700" y="464" font-size="18" fill="#7C93A9">Conventional Commits · CI 验构建</text>
+    <text x="664" y="512" font-family="Consolas, monospace" font-size="18" fill="#22D3EE">03</text>
+    <text x="700" y="512" font-size="22" font-weight="bold" fill="#E6F7FF">Material 3 设计令牌</text>
+    <text x="700" y="536" font-size="18" fill="#7C93A9">先改令牌再改页面 · 共用 item_track</text>
+  </g>
+
+  <g id="evidence" data-pptx-bounds="72 576 1136 44">
+    <line x1="72" y1="576" x2="1208" y2="576" stroke="#24455F" stroke-width="1"/>
+    <text x="72" y="608" font-size="22" fill="#CBD5E1">CI 实测：13/13 单元测试通过 · Lint 0 错误 · APK 11 MB · 提交 c44060e</text>
+  </g>
+
+  <g id="command" data-pptx-bounds="72 628 1136 40">
+    <rect x="72" y="628" width="1136" height="40" rx="2" fill="#0C2740" fill-opacity="0.55" stroke="#24455F" stroke-width="1"/>
+    <text x="96" y="655" font-family="Consolas, monospace" font-size="20" fill="#22D3EE">./gradlew testDebugUnitTest assembleDebug</text>
+    <text x="1184" y="654" text-anchor="end" font-size="16" fill="#7C93A9">本地与 CI 完全相同</text>
+  </g>
+</svg>

@@ -1,0 +1,127 @@
+{
+  "stage": "stage2",
+  "lang": "zh",
+  "selection_sha256": "2a32827dc23cfc0a8859b5ffb72e8ee421013e24a96aa68a7a27a67c59f1ca2e",
+  "recommend": {
+    "delivery_purpose": "balanced",
+    "mode": "custom",
+    "visual_style": "custom",
+    "image_strategy": "custom",
+    "image_usage": ["none"],
+    "generation_mode": "continuous"
+  },
+  "page_count": { "value": "10" },
+  "image_notes": { "value": "不使用照片或 AI 图片。封面用原生 SVG 绘制声波与设备轮廓，架构页用线框示意图，风险页用标注线；全部元素保持可编辑，避免图片获取失败影响交付。" },
+  "proactive_speaker_notes": { "value": true },
+  "proactive_custom_animations": { "value": true },
+  "proactive_narration_audio": { "value": false },
+  "refine_spec": { "value": false },
+  "design_spec_depth": { "value": "brief" },
+  "design_directions": {
+    "selected": 1,
+    "candidates": [
+      {
+        "id": "review-dossier",
+        "name": "评审白皮书",
+        "note": "接近学术评审材料：大留白、细分割线、衬线标题，结论先行，读起来像一份可归档的报告。",
+        "mode": "pyramid",
+        "mode_behavior": "每页标题就是判断句：先给结论，再用三条证据支撑，最后落到负责人和日期；五个检查点按“结论—证据—动作”重复。",
+        "visual_style": "swiss-minimal",
+        "visual_style_behavior": "严格 12 栏网格与宽阔页边距，直角、单一线宽分隔线，无卡片无阴影；大面积米白留白，深墨色文字，信号红只标记风险，青色只标记已验证。",
+        "icons": "tabler-outline",
+        "color": {
+          "name": "纸墨朱批",
+          "palette": {
+            "background": "#FAFAF7",
+            "secondary_bg": "#F0F1EC",
+            "primary": "#101820",
+            "accent": "#D7263D",
+            "secondary_accent": "#0E7490",
+            "body_text": "#1F2933"
+          }
+        },
+        "typography": {
+          "name": "宋体标题 + 微软雅黑正文",
+          "heading": { "primary": "SimSun", "english": "Times New Roman", "css": "serif" },
+          "body": { "primary": "Microsoft YaHei", "english": "Arial", "css": "sans-serif" },
+          "body_size": 24
+        },
+        "image_strategy": {
+          "name": "版面证据",
+          "rendering": "custom",
+          "visual": "极简几何色块、细线图表与边注，不使用插画或照片",
+          "mood": "像《经济学人》的图表页：克制、可信、可核对",
+          "behavior": "由 minimalist-swiss 负责网格与留白，editorial 负责细规则与边注；只用几何色块和线图，不用照片、渐变或阴影。"
+        }
+      },
+      {
+        "id": "blueprint-review",
+        "name": "工程蓝图",
+        "note": "把中期检查做成一张工程审图：深蓝图纸、细线框、标注引线，当前路径用青色高亮，风险用珊瑚色标记。",
+        "mode": "instructional",
+        "mode_behavior": "按“系统如何工作”的教学顺序拆解：先给结论，再逐层讲 UI → ViewModel → Service → 数据，最后用验收清单收束；每页只推进一个理解步骤，标题写清这一页要回答的问题。",
+        "visual_style": "blueprint",
+        "visual_style_behavior": "深蓝图纸底、5% 透明度网格、单一线宽的细线框与直角连接线；组件编号与尺寸标注使用等宽字体，青色只标当前路径，珊瑚色只标风险与未闭环项；无阴影、无渐变，靠线宽与留白分层。",
+        "icons": "tabler-outline",
+        "color": {
+          "name": "深海蓝图",
+          "palette": {
+            "background": "#071A2B",
+            "secondary_bg": "#0C2740",
+            "primary": "#E6F7FF",
+            "accent": "#22D3EE",
+            "secondary_accent": "#FB7185",
+            "body_text": "#CBD5E1"
+          }
+        },
+        "typography": {
+          "name": "微软雅黑 + Arial",
+          "heading": { "primary": "Microsoft YaHei", "english": "Arial", "css": "sans-serif" },
+          "body": { "primary": "Microsoft YaHei", "english": "Arial", "css": "sans-serif" },
+          "body_size": 24
+        },
+        "image_strategy": {
+          "name": "蓝图线稿",
+          "rendering": "custom",
+          "visual": "透明背景的工程线稿元素：设备轮廓、信号波形、节点与连接线，单色描边",
+          "mood": "像一张摊开的系统接线图：冷静、精确、可核对",
+          "behavior": "由 blueprint 负责网格底与 1.5px 均匀线宽，vector-illustration 负责简化的设备与波形轮廓；不使用实景照片或写实材质，所有元素服从深蓝底与青色高亮。"
+        }
+      },
+      {
+        "id": "product-roadshow",
+        "name": "产品路演",
+        "note": "把项目当成产品发布：大数字、暗场、发光重点，节奏更快，适合现场演示但信息密度最低。",
+        "mode": "showcase",
+        "mode_behavior": "每页只留一个主张：一句短标题加一个主视觉或大数字，证据压缩成标签；用 6/6、1/1、3、0 四个数字建立节奏。",
+        "visual_style": "dark-tech",
+        "visual_style_behavior": "近黑底、同色系微弱渐变、细发光描边与低透明度大号数字；青色用于已达成，珊瑚色用于风险；卡片圆角 8px，靠辉光而非阴影分层。",
+        "icons": "chunk-filled",
+        "color": {
+          "name": "暗场电光",
+          "palette": {
+            "background": "#05070D",
+            "secondary_bg": "#0E1420",
+            "primary": "#F8FAFC",
+            "accent": "#38BDF8",
+            "secondary_accent": "#FB7185",
+            "body_text": "#94A3B8"
+          }
+        },
+        "typography": {
+          "name": "微软雅黑 + Arial",
+          "heading": { "primary": "Microsoft YaHei", "english": "Arial", "css": "sans-serif" },
+          "body": { "primary": "Microsoft YaHei", "english": "Arial", "css": "sans-serif" },
+          "body_size": 26
+        },
+        "image_strategy": {
+          "name": "产品仪表盘",
+          "rendering": "custom",
+          "visual": "深色 UI 卡片、波形与进度环，像播放器界面的局部放大",
+          "mood": "像一场硬件发布会的主视觉：强烈、现代、有速度感",
+          "behavior": "由 digital-dashboard 负责卡片与图表元素，dark-tech 负责暗场辉光；不使用照片，所有图形保持可编辑的几何形态。"
+        }
+      }
+    ]
+  }
+}

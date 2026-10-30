@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="Microsoft YaHei, Arial, sans-serif" data-pptx-page-role="content">
+  <rect id="p08-bg" data-pptx-role="background" x="0" y="0" width="1280" height="720" fill="#071A2B"/>
+  <rect id="p08-frame" data-pptx-role="decoration" x="48" y="48" width="1184" height="624" fill="none" stroke="#24455F" stroke-opacity="0.7" stroke-width="1"/>
+  <line id="p08-grid-h1" data-pptx-role="decoration" x1="0" y1="80" x2="1280" y2="80" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p08-grid-h2" data-pptx-role="decoration" x1="0" y1="160" x2="1280" y2="160" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p08-grid-h3" data-pptx-role="decoration" x1="0" y1="240" x2="1280" y2="240" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p08-grid-h4" data-pptx-role="decoration" x1="0" y1="320" x2="1280" y2="320" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p08-grid-h5" data-pptx-role="decoration" x1="0" y1="400" x2="1280" y2="400" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p08-grid-h6" data-pptx-role="decoration" x1="0" y1="480" x2="1280" y2="480" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p08-grid-h7" data-pptx-role="decoration" x1="0" y1="560" x2="1280" y2="560" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p08-grid-h8" data-pptx-role="decoration" x1="0" y1="640" x2="1280" y2="640" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p08-grid-v1" data-pptx-role="decoration" x1="160" y1="0" x2="160" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p08-grid-v2" data-pptx-role="decoration" x1="320" y1="0" x2="320" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p08-grid-v3" data-pptx-role="decoration" x1="480" y1="0" x2="480" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p08-grid-v4" data-pptx-role="decoration" x1="640" y1="0" x2="640" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p08-grid-v5" data-pptx-role="decoration" x1="800" y1="0" x2="800" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p08-grid-v6" data-pptx-role="decoration" x1="960" y1="0" x2="960" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p08-grid-v7" data-pptx-role="decoration" x1="1120" y1="0" x2="1120" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+
+  <text id="p08-chrome-tl" data-pptx-role="footer" x="72" y="66" font-family="Consolas, monospace" font-size="16" letter-spacing="1.5" fill="#7C93A9">FIG. 08 / W08-MIDTERM</text>
+  <text id="p08-chrome-tr" data-pptx-role="footer" x="1208" y="66" text-anchor="end" font-family="Consolas, monospace" font-size="16" letter-spacing="1.5" fill="#7C93A9">ANDROID · LOCAL PLAYBACK</text>
+  <text id="p08-chrome-bl" data-pptx-role="footer" x="72" y="700" font-size="16" fill="#7C93A9">嵌入式手机终端开发技术 · 第八周中期汇报</text>
+  <text id="p08-chrome-br" data-pptx-role="page-number" x="1208" y="700" text-anchor="end" font-family="Consolas, monospace" font-size="16" fill="#7C93A9">08 / 10</text>
+
+  <g id="title-block" data-pptx-bounds="72 90 1136 130">
+    <text x="72" y="118" font-family="Consolas, monospace" font-size="18" letter-spacing="2" fill="#22D3EE">08 / INTEGRATION &amp; QUALITY</text>
+    <text x="72" y="180" font-size="48" font-weight="bold" fill="#E6F7FF">代码真的集成、真的可复现吗？</text>
+    <use data-icon="tabler-outline/brand-github" x="1148" y="132" width="40" height="40" fill="#22D3EE" stroke-width="1.5"/>
+  </g>
+
+  <g id="lede" data-pptx-bounds="72 230 1100 45">
+    <text x="72" y="258" font-size="24" fill="#CBD5E1">Git + GitHub 管理代码，每次 push 自动测试并产出 APK——拉下来就能复现。</text>
+  </g>
+
+  <g id="pipeline" data-pptx-bounds="72 280 660 350">
+    <text x="72" y="294" font-family="Consolas, monospace" font-size="16" letter-spacing="1.5" fill="#22D3EE">GITHUB ACTIONS · PUSH 触发</text>
+    <line x1="110" y1="312" x2="110" y2="588" stroke="#24455F" stroke-width="1.5"/>
+    <text x="72" y="311" font-family="Consolas, monospace" font-size="16" fill="#7C93A9">01</text>
+    <circle cx="110" cy="306" r="4" fill="#22D3EE"/>
+    <text x="140" y="313" font-size="22" font-weight="bold" fill="#E6F7FF">Checkout repository</text>
+    <text x="140" y="335" font-size="18" fill="#7C93A9">拉取完整提交历史</text>
+    <text x="72" y="375" font-family="Consolas, monospace" font-size="16" fill="#7C93A9">02</text>
+    <circle cx="110" cy="370" r="4" fill="#22D3EE"/>
+    <text x="140" y="377" font-size="22" font-weight="bold" fill="#E6F7FF">Set up JDK 25 (Temurin)</text>
+    <text x="140" y="399" font-size="18" fill="#7C93A9">与本地同一版本</text>
+    <text x="72" y="439" font-family="Consolas, monospace" font-size="16" fill="#7C93A9">03</text>
+    <circle cx="110" cy="434" r="4" fill="#22D3EE"/>
+    <text x="140" y="441" font-size="22" font-weight="bold" fill="#E6F7FF">Set up Android SDK</text>
+    <text x="140" y="463" font-size="18" fill="#7C93A9">compileSdk 37</text>
+    <text x="72" y="503" font-family="Consolas, monospace" font-size="16" fill="#7C93A9">04</text>
+    <circle cx="110" cy="498" r="4" fill="#22D3EE"/>
+    <text x="140" y="505" font-size="22" font-weight="bold" fill="#E6F7FF">Run unit tests</text>
+    <text x="140" y="527" font-size="18" fill="#7C93A9">13 / 13 通过</text>
+    <text x="72" y="567" font-family="Consolas, monospace" font-size="16" fill="#7C93A9">05</text>
+    <circle cx="110" cy="562" r="4" fill="#22D3EE"/>
+    <text x="140" y="569" font-size="22" font-weight="bold" fill="#E6F7FF">Assemble debug APK</text>
+    <text x="140" y="591" font-size="18" fill="#7C93A9">产出小组统一安装包</text>
+  </g>
+
+  <g id="results" data-pptx-bounds="772 280 436 350">
+    <text x="772" y="348" font-size="48" font-weight="bold" fill="#22D3EE">13/13</text>
+    <text x="772" y="374" font-size="18" fill="#CBD5E1">单元测试全部通过</text>
+    <line x1="772" y1="396" x2="1208" y2="396" stroke="#24455F" stroke-width="1"/>
+    <text x="772" y="452" font-size="48" font-weight="bold" fill="#22D3EE">0</text>
+    <text x="772" y="478" font-size="18" fill="#CBD5E1">Lint 错误</text>
+    <line x1="772" y1="500" x2="1208" y2="500" stroke="#24455F" stroke-width="1"/>
+    <text x="772" y="556" font-size="48" font-weight="bold" fill="#22D3EE">11 MB</text>
+    <text x="772" y="582" font-size="18" fill="#CBD5E1">debug APK 体积</text>
+    <text x="772" y="616" font-family="Consolas, monospace" font-size="16" fill="#7C93A9">commit c44060e · run #2 · 2026-10-17</text>
+  </g>
+
+  <g id="repo" data-pptx-bounds="72 640 1136 28">
+    <text x="72" y="662" font-size="16" fill="#7C93A9">仓库：github.com/changqing3133/music-player · main / develop + 功能分支 · PR 需通过 CI 才能合入</text>
+  </g>
+</svg>

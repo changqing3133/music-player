@@ -1,0 +1,161 @@
+{
+  "source": "E:\\music\\projects\\week8_midterm_20261030\\sources\\第八周中期汇报.pptx",
+  "slide_count": 10,
+  "canvas": {
+    "width_px": 960,
+    "height_px": 540,
+    "aspect": 1.7778
+  },
+  "theme": {
+    "palette": {
+      "background": "#FFFFFF",
+      "background_alt": "#E7E6E6",
+      "text": "#000000",
+      "text_alt": "#44546A",
+      "hyperlink": "#0563C1",
+      "accent1": "#4472C4",
+      "accent2": "#ED7D31",
+      "accent3": "#A5A5A5",
+      "accent4": "#FFC000",
+      "accent5": "#5B9BD5",
+      "accent6": "#70AD47",
+      "primary": "#4472C4"
+    },
+    "fonts": {
+      "title": {
+        "latin": "Calibri Light",
+        "scripts": {
+          "Jpan": "游ゴシック Light",
+          "Hang": "맑은 고딕",
+          "Hans": "等线 Light",
+          "Hant": "新細明體"
+        }
+      },
+      "body": {
+        "latin": "Calibri",
+        "scripts": {
+          "Jpan": "游ゴシック",
+          "Hang": "맑은 고딕",
+          "Hans": "等线",
+          "Hant": "新細明體"
+        }
+      }
+    },
+    "sizes": {
+      "title": 44.0,
+      "body": 32.0,
+      "body_levels": [
+        32.0,
+        28.0,
+        24.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0
+      ]
+    }
+  },
+  "observed": {
+    "fonts": {
+      "latin": [
+        {
+          "value": "Microsoft YaHei",
+          "count": 290
+        },
+        {
+          "value": "Courier New",
+          "count": 1
+        }
+      ],
+      "ea": [
+        {
+          "value": "Microsoft YaHei",
+          "count": 290
+        },
+        {
+          "value": "Courier New",
+          "count": 1
+        }
+      ]
+    },
+    "sizes_pt": [
+      {
+        "value": 8.0,
+        "count": 22,
+        "chars": 614
+      },
+      {
+        "value": 6.8,
+        "count": 31,
+        "chars": 563
+      },
+      {
+        "value": 8.2,
+        "count": 27,
+        "chars": 473
+      },
+      {
+        "value": 9.0,
+        "count": 20,
+        "chars": 449
+      },
+      {
+        "value": 7.2,
+        "count": 3,
+        "chars": 255
+      },
+      {
+        "value": 9.5,
+        "count": 13,
+        "chars": 228
+      },
+      {
+        "value": 7.5,
+        "count": 17,
+        "chars": 208
+      },
+      {
+        "value": 6.9,
+        "count": 9,
+        "chars": 199
+      }
+    ],
+    "colors": [
+      {
+        "value": "#0B1220",
+        "count": 70
+      },
+      {
+        "value": "#64748B",
+        "count": 67
+      },
+      {
+        "value": "#DCE3EC",
+        "count": 63
+      },
+      {
+        "value": "#FFFFFF",
+        "count": 56
+      },
+      {
+        "value": "#0891B2",
+        "count": 42
+      },
+      {
+        "value": "#22D3EE",
+        "count": 41
+      },
+      {
+        "value": "#334155",
+        "count": 40
+      },
+      {
+        "value": "#94A3B8",
+        "count": 34
+      }
+    ]
+  },
+  "layout_sizes_pt": []
+}

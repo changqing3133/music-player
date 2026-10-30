@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="Microsoft YaHei, Arial, sans-serif" data-pptx-page-role="cover">
+  <defs>
+    <marker id="p01-arrow-accent" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0 0 10 5 0 10" fill="#22D3EE"/>
+    </marker>
+  </defs>
+
+  <rect id="p01-bg" data-pptx-role="background" x="0" y="0" width="1280" height="720" fill="#071A2B"/>
+  <rect id="p01-frame" data-pptx-role="decoration" x="48" y="48" width="1184" height="624" fill="none" stroke="#24455F" stroke-opacity="0.7" stroke-width="1"/>
+  <line id="p01-grid-h1" data-pptx-role="decoration" x1="0" y1="80" x2="1280" y2="80" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p01-grid-h2" data-pptx-role="decoration" x1="0" y1="160" x2="1280" y2="160" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p01-grid-h3" data-pptx-role="decoration" x1="0" y1="240" x2="1280" y2="240" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p01-grid-h4" data-pptx-role="decoration" x1="0" y1="320" x2="1280" y2="320" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p01-grid-h5" data-pptx-role="decoration" x1="0" y1="400" x2="1280" y2="400" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p01-grid-h6" data-pptx-role="decoration" x1="0" y1="480" x2="1280" y2="480" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p01-grid-h7" data-pptx-role="decoration" x1="0" y1="560" x2="1280" y2="560" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p01-grid-h8" data-pptx-role="decoration" x1="0" y1="640" x2="1280" y2="640" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p01-grid-v1" data-pptx-role="decoration" x1="160" y1="0" x2="160" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p01-grid-v2" data-pptx-role="decoration" x1="320" y1="0" x2="320" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p01-grid-v3" data-pptx-role="decoration" x1="480" y1="0" x2="480" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p01-grid-v4" data-pptx-role="decoration" x1="640" y1="0" x2="640" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p01-grid-v5" data-pptx-role="decoration" x1="800" y1="0" x2="800" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p01-grid-v6" data-pptx-role="decoration" x1="960" y1="0" x2="960" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+  <line id="p01-grid-v7" data-pptx-role="decoration" x1="1120" y1="0" x2="1120" y2="720" stroke="#7C93A9" stroke-opacity="0.10" stroke-width="1"/>
+
+  <text id="p01-chrome-tl" data-pptx-role="footer" x="72" y="66" font-family="Consolas, monospace" font-size="16" letter-spacing="1.5" fill="#7C93A9">FIG. 01 / W08-MIDTERM</text>
+  <text id="p01-chrome-tr" data-pptx-role="footer" x="1208" y="66" text-anchor="end" font-family="Consolas, monospace" font-size="16" letter-spacing="1.5" fill="#7C93A9">ANDROID · LOCAL PLAYBACK</text>
+  <text id="p01-chrome-bl" data-pptx-role="footer" x="72" y="700" font-size="16" fill="#7C93A9">嵌入式手机终端开发技术 · 第八周中期汇报</text>
+  <text id="p01-chrome-br" data-pptx-role="page-number" x="1208" y="700" text-anchor="end" font-family="Consolas, monospace" font-size="16" fill="#7C93A9">01 / 10</text>
+
+  <g id="cover-title" data-pptx-bounds="72 96 768 456">
+    <text x="72" y="150" font-family="Consolas, monospace" font-size="18" letter-spacing="2" fill="#22D3EE">WEEK 08 · MIDTERM REPORT</text>
+    <text x="72" y="278" font-size="96" font-weight="bold" letter-spacing="4" fill="#E6F7FF">本地音乐<tspan x="72" dy="110">播放器</tspan></text>
+    <text x="72" y="452" font-size="30" fill="#CBD5E1">Android 本地音乐播放器 · 第八周中期汇报</text>
+    <text x="72" y="494" font-size="24" fill="#7C93A9">嵌入式手机终端开发技术 · 南京邮电大学 · 2026 秋季</text>
+    <text x="72" y="528" font-size="18" fill="#7C93A9">汇报人：成员A（组长） · 2026.10.24</text>
+  </g>
+
+  <g id="cover-device" data-pptx-bounds="880 110 328 490">
+    <rect x="920" y="140" width="220" height="380" rx="28" fill="none" stroke="#7C93A9" stroke-width="1.5"/>
+    <rect x="936" y="172" width="188" height="300" rx="6" fill="none" stroke="#24455F" stroke-width="1.5"/>
+    <line x1="990" y1="156" x2="1070" y2="156" stroke="#24455F" stroke-width="1.5"/>
+    <circle cx="1030" cy="496" r="9" fill="none" stroke="#7C93A9" stroke-width="1.5"/>
+    <use data-icon="tabler-outline/music" x="1012" y="196" width="36" height="36" fill="#22D3EE" stroke-width="1.5"/>
+    <circle cx="1012" cy="252" r="7" fill="none" stroke="#7C93A9" stroke-width="1.5"/>
+    <circle cx="1012" cy="252" r="20" fill="none" stroke="#22D3EE" stroke-width="1.5"/>
+    <line x1="960" y1="340" x2="960" y2="300" stroke="#22D3EE" stroke-width="2"/>
+    <line x1="976" y1="340" x2="976" y2="286" stroke="#22D3EE" stroke-width="2"/>
+    <line x1="992" y1="340" x2="992" y2="312" stroke="#22D3EE" stroke-width="2"/>
+    <line x1="1008" y1="340" x2="1008" y2="276" stroke="#22D3EE" stroke-width="2"/>
+    <line x1="1024" y1="340" x2="1024" y2="296" stroke="#22D3EE" stroke-width="2"/>
+    <line x1="1040" y1="340" x2="1040" y2="306" stroke="#22D3EE" stroke-width="2"/>
+    <line x1="1056" y1="340" x2="1056" y2="282" stroke="#22D3EE" stroke-width="2"/>
+    <line x1="1072" y1="340" x2="1072" y2="300" stroke="#22D3EE" stroke-width="2"/>
+    <line x1="1088" y1="340" x2="1088" y2="314" stroke="#22D3EE" stroke-width="2"/>
+    <line x1="1104" y1="340" x2="1104" y2="290" stroke="#22D3EE" stroke-width="2"/>
+    <line x1="920" y1="552" x2="1140" y2="552" stroke="#7C93A9" stroke-width="1"/>
+    <line x1="920" y1="546" x2="920" y2="558" stroke="#7C93A9" stroke-width="1"/>
+    <line x1="1140" y1="546" x2="1140" y2="558" stroke="#7C93A9" stroke-width="1"/>
+    <line x1="1108" y1="552" x2="1108" y2="568" stroke="#7C93A9" stroke-width="1"/>
+    <text x="920" y="584" font-family="Consolas, monospace" font-size="16" letter-spacing="1" fill="#7C93A9">ANDROID 7.0+</text>
+  </g>
+
+  <g id="cover-progress" data-pptx-bounds="72 600 1136 60">
+    <line x1="72" y1="626" x2="1192" y2="626" stroke="#24455F" stroke-width="2"/>
+    <line x1="72" y1="626" x2="488" y2="626" stroke="#22D3EE" stroke-width="2"/>
+    <line x1="72" y1="620" x2="72" y2="632" stroke="#7C93A9" stroke-width="1"/>
+    <line x1="212" y1="622" x2="212" y2="630" stroke="#24455F" stroke-width="1"/>
+    <line x1="352" y1="622" x2="352" y2="630" stroke="#24455F" stroke-width="1"/>
+    <line x1="488" y1="622" x2="488" y2="630" stroke="#22D3EE" stroke-width="1"/>
+    <line x1="632" y1="622" x2="632" y2="630" stroke="#24455F" stroke-width="1"/>
+    <line x1="772" y1="622" x2="772" y2="630" stroke="#24455F" stroke-width="1"/>
+    <line x1="912" y1="622" x2="912" y2="630" stroke="#24455F" stroke-width="1"/>
+    <line x1="1052" y1="622" x2="1052" y2="630" stroke="#24455F" stroke-width="1"/>
+    <line x1="1192" y1="620" x2="1192" y2="632" stroke="#7C93A9" stroke-width="1"/>
+    <circle cx="488" cy="626" r="7" fill="#071A2B" stroke="#22D3EE" stroke-width="2"/>
+    <text x="72" y="654" font-family="Consolas, monospace" font-size="16" fill="#7C93A9">W01</text>
+    <text x="488" y="654" text-anchor="middle" font-family="Consolas, monospace" font-size="16" letter-spacing="1" fill="#22D3EE">W08 · 中期检查</text>
+    <text x="1192" y="654" text-anchor="end" font-family="Consolas, monospace" font-size="16" fill="#7C93A9">W16</text>
+  </g>
+</svg>

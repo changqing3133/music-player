@@ -1,0 +1,1 @@
+代码管理用 Git 加 GitHub。每次 push 触发 GitHub Actions，流水线五步：拉取仓库、装 JDK 25、装 Android SDK、跑单元测试、打 debug APK。最新一次运行十三项测试全过，Lint 零错误，APK 十一兆，提交 c44060e，运行编号二，日期十月十七号。仓库在 github 上的 changqing3133 斜杠 music-player，主分支加功能分支，PR 必须过 CI 才能合入。也就是说，任何人把代码拉下来，跑同一条命令，都能得到同一个 APK。

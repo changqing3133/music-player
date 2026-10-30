@@ -1,0 +1,1 @@
+环境一致不靠口头约定，靠文件。版本矩阵固定为 JDK 25、Gradle 9.6.0、Android Gradle Plugin 9.4.0、compileSdk 37、minSdk 24。三件事保证三个人一样：第一，Gradle Wrapper 锁版本，依赖集中在版本目录里声明；第二，main 和 develop 加功能分支，提交钩子校验 Conventional Commits，PR 必须过 CI 才能合入；第三，界面先改 Material 3 令牌再改页面，共用 item_track 布局。结果是 CI 上十三项单测全过、Lint 零错误、APK 十一兆，对应提交 c44060e。本地和 CI 跑的是同一条 gradlew 命令。

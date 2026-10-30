@@ -1,0 +1,107 @@
+{
+  "roles": {
+    "body": {
+      "family": "Microsoft YaHei, Arial, sans-serif",
+      "size": 24.0,
+      "weight": "normal",
+      "cjk_chars_per_100px": 3.9,
+      "latin_chars_per_100px": 8.1,
+      "caps_chars_per_100px": 7.5,
+      "digits_chars_per_100px": 7.1,
+      "citation_chars_per_100px": 7.5,
+      "script_clusters_per_100px": {},
+      "longest_planned_line": {
+        "px": 1125.1,
+        "slide": "P08",
+        "text": "Checkout → JDK 25 → Android SDK → Unit …"
+      }
+    },
+    "title": {
+      "family": "Microsoft YaHei, Arial, sans-serif",
+      "size": 48.0,
+      "weight": "normal",
+      "cjk_chars_per_100px": 2.0,
+      "latin_chars_per_100px": 4.0,
+      "caps_chars_per_100px": 3.7,
+      "digits_chars_per_100px": 3.6,
+      "citation_chars_per_100px": 3.8,
+      "script_clusters_per_100px": {},
+      "longest_planned_line": {
+        "px": 865.0,
+        "slide": "P07",
+        "text": "必选、可选、扩展，完成到什么程度？"
+      }
+    },
+    "subtitle": {
+      "family": "Microsoft YaHei, Arial, sans-serif",
+      "size": 30.0,
+      "weight": "normal",
+      "cjk_chars_per_100px": 3.1,
+      "latin_chars_per_100px": 6.5,
+      "caps_chars_per_100px": 6.0,
+      "digits_chars_per_100px": 5.7,
+      "citation_chars_per_100px": 6.0,
+      "script_clusters_per_100px": {},
+      "longest_planned_line": {
+        "px": 1319.9,
+        "slide": "P04",
+        "text": "播放实例只存在于 PlaybackService，UI 通过 MediaCon…"
+      }
+    },
+    "annotation": {
+      "family": "Microsoft YaHei, Arial, sans-serif",
+      "size": 18.0,
+      "weight": "normal",
+      "cjk_chars_per_100px": 5.2,
+      "latin_chars_per_100px": 10.8,
+      "caps_chars_per_100px": 10.0,
+      "digits_chars_per_100px": 9.5,
+      "citation_chars_per_100px": 10.0,
+      "script_clusters_per_100px": {},
+      "longest_planned_line": null
+    },
+    "code": {
+      "family": "Consolas, monospace",
+      "size": 18.0,
+      "weight": "normal",
+      "cjk_chars_per_100px": 5.2,
+      "latin_chars_per_100px": 9.4,
+      "caps_chars_per_100px": 9.0,
+      "digits_chars_per_100px": 9.5,
+      "citation_chars_per_100px": 9.4,
+      "script_clusters_per_100px": {},
+      "longest_planned_line": null
+    },
+    "display": {
+      "family": "Microsoft YaHei, Arial, sans-serif",
+      "size": 96.0,
+      "weight": "normal",
+      "cjk_chars_per_100px": 1.0,
+      "latin_chars_per_100px": 2.0,
+      "caps_chars_per_100px": 1.9,
+      "digits_chars_per_100px": 1.8,
+      "citation_chars_per_100px": 1.9,
+      "script_clusters_per_100px": {},
+      "longest_planned_line": null
+    },
+    "footnote": {
+      "family": "Microsoft YaHei, Arial, sans-serif",
+      "size": 16.0,
+      "weight": "normal",
+      "cjk_chars_per_100px": 5.9,
+      "latin_chars_per_100px": 12.1,
+      "caps_chars_per_100px": 11.2,
+      "digits_chars_per_100px": 10.7,
+      "citation_chars_per_100px": 11.3,
+      "script_clusters_per_100px": {},
+      "longest_planned_line": null
+    }
+  },
+  "script_samples": {},
+  "source": "spec_lock.md",
+  "generated_at": "2026-10-30T04:20:44Z",
+  "notes": [
+    "role display (96px, at least twice body) has no display_family and uses body_family; declare display_family if it is display type",
+    "every role is measured at normal weight; recalibrate a role realized as bold deck-wide with --role NAME:FAMILY:SIZE:bold: bold widens Latin and digits about 7%, while the bundled advance table gives CJK one width for both weights"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "phase": "strategist",
+  "status": "ready_user",
+  "current_stage": "stage2",
+  "expected_stage": "stage2",
+  "expected_stage_number": 2,
+  "recommendation_stage": "stage2",
+  "recommendation_stage_number": 2,
+  "recommendation_file": "recommendations.stage2.json",
+  "recommendation_version": "accd92746f4c95de481e618f0d402c3e4fe6a245d3bda97a0edfb9060d5fb183",
+  "recommendation_error": null,
+  "result_stage": "stage1",
+  "result_stage_number": 1,
+  "result_version": "42b21d4e061b97ecd3c498be62a2617481102ef7ae94d6e19a9286c5520604aa",
+  "server_port": 5050,
+  "event": "poll",
+  "template_selection_version": "2c6fee3976267af124c28050dcaa98deed24f0f36c8cc38b4df669d1c28359ad",
+  "template_install_version": null,
+  "template_status": "ready",
+  "template_error": null,
+  "updated_at": "2026-10-30T12:16:41"
+}
