@@ -50,4 +50,9 @@
     <string name="play_pause">播放 / 暂停</string>
     <string name="repeat">切换循环模式</string>
     <string name="shuffle">切换随机播放</string>
+    <string name="shuffle_enabled_next">随机播放已开启 · 下一首：%1$s</string>
+    <string name="shuffle_enabled">随机播放已开启 · 共 %1$d 首</string>
+    <string name="shuffle_disabled">随机播放已关闭 · 恢复顺序播放</string>
+    <string name="shuffle_enabled_repeat_one">随机播放已开启；当前是单曲循环，播完会重复本曲，按“下一首”才会随机切歌</string>
+    <string name="shuffle_needs_more_tracks">曲库只有 %1$d 首，随机播放暂时不会改变顺序</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.musicplayer.playback;
 
+import androidx.annotation.Nullable;
 import androidx.media3.common.MediaItem;
 
 import java.util.ArrayList;
@@ -53,5 +54,48 @@ public final class ShuffleHelper {
             }
         }
         return -1;
+    }
+
+    /**
+     * 计算一次"随机开关"后的队列与起始下标。
+     *
+     * <p>必须以当前曲目的 mediaId 定位，而不是沿用控制器里的下标：
+     * 曲库重新扫描后 queueSource 的顺序可能已经变化，直接套用旧下标会切到别的歌。
+     * 当前曲目不在曲库中时（例如从文件管理器打开的外部音频）把它追加到队尾，避免丢失。</p>
+     */
+    public static QueuePlan planToggle(@Nullable List<MediaItem> library,
+                                       @Nullable MediaItem currentItem,
+                                       boolean enableShuffle) {
+        List<MediaItem> source = library == null
+                ? new ArrayList<>() : new ArrayList<>(library);
+
+        int keep;
+        if (currentItem == null) {
+            keep = 0;
+        } else {
+            keep = indexOfMediaId(source, currentItem.mediaId);
+            if (keep < 0) {
+                source.add(currentItem);
+                keep = source.size() - 1;
+            }
+        }
+
+        if (source.isEmpty()) {
+            return new QueuePlan(source, 0);
+        }
+        List<MediaItem> queue = enableShuffle
+                ? shuffleKeepingIndex(source, keep) : source;
+        return new QueuePlan(queue, keep);
+    }
+
+    /** 一次随机开关的目标队列：items 为最终队列，startIndex 为当前曲目所在下标。 */
+    public static final class QueuePlan {
+        public final List<MediaItem> items;
+        public final int startIndex;
+
+        QueuePlan(List<MediaItem> items, int startIndex) {
+            this.items = items;
+            this.startIndex = startIndex;
+        }
     }
 }

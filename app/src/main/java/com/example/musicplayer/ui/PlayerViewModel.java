@@ -29,6 +29,7 @@ import androidx.media3.session.MediaController;
 import androidx.media3.session.SessionToken;
 
 import com.example.musicplayer.MusicApp;
+import com.example.musicplayer.R;
 import com.example.musicplayer.data.LibraryRepository;
 import com.example.musicplayer.data.Prefs;
 import com.example.musicplayer.data.TrackEntity;
@@ -105,6 +106,8 @@ public class PlayerViewModel extends AndroidViewModel {
         rebuildQueueSource();
         if (!queueInitialized && controller != null && controller.getMediaItemCount() == 0) {
             initializeQueue();
+        } else {
+            syncQueueWithLibrary();
         }
         publishState();
     };
@@ -177,7 +180,9 @@ public class PlayerViewModel extends AndroidViewModel {
                 }
 
                 if (controller.getMediaItemCount() > 0) {
+                    // 服务里可能还留着上一次会话的队列，对齐到最新曲库
                     queueInitialized = true;
+                    syncQueueWithLibrary();
                 } else if (!queueInitialized) {
                     initializeQueue();
                 }
@@ -223,6 +228,68 @@ public class PlayerViewModel extends AndroidViewModel {
             items.add(toMediaItem(track));
         }
         queueSource = items;
+    }
+
+    /**
+     * 曲库内容变化（重新扫描、删除歌曲）后，把控制器队列同步为最新曲库。
+     *
+     * <p>只在当前曲目仍属于曲库时才重建，避免把"文件管理器打开的外部音频"挤出队列；
+     * 队列内容没有变化时也不动它，防止普通扫描引起跳歌或打断播放。</p>
+     */
+    private void syncQueueWithLibrary() {
+        if (controller == null || !queueInitialized || queueSource.isEmpty()) {
+            return;
+        }
+        MediaItem current = controller.getCurrentMediaItem();
+        if (current == null) {
+            return;
+        }
+        int sourceIndex = ShuffleHelper.indexOfMediaId(queueSource, current.mediaId);
+        if (sourceIndex < 0) {
+            // 当前播放的是曲库之外的音频，保持现有队列
+            return;
+        }
+        if (queueMatchesLibrary()) {
+            return;
+        }
+
+        long position = controller.getCurrentPosition();
+        boolean playWhenReady = controller.getPlayWhenReady();
+        List<MediaItem> queue = new ArrayList<>(queueSource);
+        if (prefs.isShuffleEnabled()) {
+            queue = ShuffleHelper.shuffleKeepingIndex(queue, sourceIndex);
+        }
+        controller.setMediaItems(queue, sourceIndex, position);
+        controller.setPlayWhenReady(playWhenReady);
+        controller.prepare();
+    }
+
+    private boolean queueMatchesLibrary() {
+        int count = controller.getMediaItemCount();
+        if (count != queueSource.size()) {
+            return false;
+        }
+        if (prefs.isShuffleEnabled()) {
+            // 随机模式下队列只是曲库的一个排列，按歌曲集合比较
+            List<String> queuedIds = new ArrayList<>(count);
+            for (int i = 0; i < count; i++) {
+                queuedIds.add(controller.getMediaItemAt(i).mediaId);
+            }
+            for (MediaItem item : queueSource) {
+                if (!queuedIds.remove(item.mediaId)) {
+                    return false;
+                }
+            }
+            return queuedIds.isEmpty();
+        }
+        for (int i = 0; i < count; i++) {
+            String queued = controller.getMediaItemAt(i).mediaId;
+            String source = queueSource.get(i).mediaId;
+            if (queued == null ? source != null : !queued.equals(source)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static MediaItem toMediaItem(TrackEntity track) {
@@ -455,37 +522,76 @@ public class PlayerViewModel extends AndroidViewModel {
 
     /**
      * 随机开关：重排队列，当前曲目留在原位置，播放位置保持不变。
+     *
+     * <p>当前曲目按 mediaId 在最新曲库中定位，不沿用控制器队列的旧下标：
+     * 重新扫描后 queueSource 的顺序可能已经变化，套用旧下标会切到别的歌，
+     * 关闭随机时还可能因为找不到而跳回第一首。</p>
      */
     public void toggleShuffle() {
-        if (controller == null || queueSource.isEmpty()) {
+        if (controller == null) {
             return;
         }
         boolean enable = !prefs.isShuffleEnabled();
         long position = controller.getCurrentPosition();
-        int currentIndex = controller.getCurrentMediaItemIndex();
         MediaItem currentItem = controller.getCurrentMediaItem();
         boolean playWhenReady = controller.getPlayWhenReady();
 
-        List<MediaItem> newQueue;
-        int newIndex;
-        if (enable) {
-            newQueue = ShuffleHelper.shuffleKeepingIndex(new ArrayList<>(queueSource), currentIndex);
-            newIndex = Math.max(0, Math.min(currentIndex, newQueue.size() - 1));
-        } else {
-            newQueue = new ArrayList<>(queueSource);
-            newIndex = currentItem == null
-                    ? 0
-                    : ShuffleHelper.indexOfMediaId(newQueue, currentItem.mediaId);
-            if (newIndex < 0) {
-                newIndex = 0;
-            }
+        List<MediaItem> library = queueSource;
+        if (library.isEmpty() && currentItem != null) {
+            library = Collections.singletonList(currentItem);
+        }
+        if (library.isEmpty()) {
+            return;
         }
 
-        controller.setMediaItems(newQueue, newIndex, position);
+        ShuffleHelper.QueuePlan plan = ShuffleHelper.planToggle(library, currentItem, enable);
+        if (plan.items.isEmpty()) {
+            return;
+        }
+
+        // 先落盘，保证"开关状态"与"队列顺序"不会因为中途异常而不一致
+        prefs.setShuffleEnabled(enable);
+
+        controller.setMediaItems(plan.items, plan.startIndex, position);
         controller.setPlayWhenReady(playWhenReady);
         controller.prepare();
-        prefs.setShuffleEnabled(enable);
+        queueInitialized = true;
+
+        notifyShuffleChanged(enable, plan);
         publishState();
+    }
+
+    private void notifyShuffleChanged(boolean enable, ShuffleHelper.QueuePlan plan) {
+        int count = plan.items.size();
+        if (count <= 1) {
+            message.setValue(app.getString(R.string.shuffle_needs_more_tracks, count));
+            return;
+        }
+        if (!enable) {
+            message.setValue(app.getString(R.string.shuffle_disabled));
+            return;
+        }
+        if (prefs.getRepeatMode() == Player.REPEAT_MODE_ONE) {
+            // 单曲循环会盖过随机：播完仍是本曲，只有手动"下一首"才会随机切歌
+            message.setValue(app.getString(R.string.shuffle_enabled_repeat_one));
+            return;
+        }
+        int nextIndex = plan.startIndex + 1;
+        if (nextIndex < count) {
+            message.setValue(app.getString(R.string.shuffle_enabled_next,
+                    titleOf(plan.items.get(nextIndex))));
+        } else {
+            message.setValue(app.getString(R.string.shuffle_enabled, count));
+        }
+    }
+
+    private String titleOf(MediaItem item) {
+        MediaMetadata metadata = item == null ? null : item.mediaMetadata;
+        CharSequence title = metadata == null ? null : metadata.title;
+        if (title == null || title.toString().trim().isEmpty()) {
+            return app.getString(R.string.unknown_title);
+        }
+        return title.toString();
     }
 
     /** 将用户选择的 .lrc 复制到应用歌词目录，文件名与当前歌曲标题一致。 */
