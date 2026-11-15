@@ -51,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
         // 冷启动来自“打开方式”时直接进入播放页，避免先 add 曲库页、再叠加播放页
         Uri viewUri = savedInstanceState == null ? viewUriFrom(getIntent()) : null;
-        int initialTab = initialTab(savedInstanceState, viewUri);
-        if (initialTab != R.id.nav_library) {
+        int startTab = initialTab(savedInstanceState, viewUri);
+        if (startTab != R.id.nav_library) {
             // 在注册监听之前恢复选中项，避免重复添加 Fragment
-            binding.bottomNav.setSelectedItemId(initialTab);
+            binding.bottomNav.setSelectedItemId(startTab);
         }
 
         binding.bottomNav.setOnItemSelectedListener(item -> {
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        switchTab(initialTab);
+        switchTab(startTab);
 
         viewModel.getMessage().observe(this, msg -> {
             if (msg != null) {
