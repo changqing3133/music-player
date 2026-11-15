@@ -8,23 +8,13 @@ import android.net.Uri;
 import android.provider.MediaStore;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
-import java.util.Set;
 
 /**
  * 通过 MediaStore 扫描本地音频。优先使用系统媒体索引，避免直接遍历外部存储
  * （Android 10+ 分区存储下路径访问不可靠）。
  */
 public final class MediaStoreScanner {
-
-    /** 必选格式：MP3 / AMR / AAC / OGG；额外兼容常见容器扩展名（含无损）。 */
-    private static final Set<String> SUPPORTED_EXTENSIONS = new HashSet<>(Arrays.asList(
-            "mp3", "aac", "m4a", "mp4", "amr", "awb", "ogg", "oga", "opus",
-            "flac", "wav"
-    ));
 
     private static final long MIN_DURATION_MS = 10_000L;
 
@@ -75,14 +65,14 @@ public final class MediaStoreScanner {
             while (cursor.moveToNext()) {
                 String displayName = getString(cursor, nameIndex);
                 String mimeType = getString(cursor, mimeIndex);
-                if (!isSupported(displayName, mimeType)) {
+                if (!AudioFileTypes.isSupported(displayName, mimeType)) {
                     continue;
                 }
 
                 long mediaId = cursor.getLong(idIndex);
                 String title = getString(cursor, titleIndex).trim();
                 if (title.isEmpty()) {
-                    title = stripExtension(displayName);
+                    title = AudioFileTypes.stripExtension(displayName);
                 }
                 if (title.isEmpty()) {
                     title = "未命名曲目";
@@ -115,34 +105,6 @@ public final class MediaStoreScanner {
         // 查询失败（例如权限被撤销）会抛出异常，由 LibraryRepository 捕获并保留旧曲库，
         // 避免用空列表覆盖数据库。
         return result;
-    }
-
-    private static boolean isSupported(String displayName, String mimeType) {
-        String extension = extensionOf(displayName);
-        if (SUPPORTED_EXTENSIONS.contains(extension)) {
-            return true;
-        }
-        // 无扩展名的文件交给 MIME 兜底
-        return extension.isEmpty() && mimeType != null && mimeType.startsWith("audio/");
-    }
-
-    private static String extensionOf(String fileName) {
-        if (fileName == null) {
-            return "";
-        }
-        int dot = fileName.lastIndexOf('.');
-        if (dot < 0 || dot == fileName.length() - 1) {
-            return "";
-        }
-        return fileName.substring(dot + 1).toLowerCase(Locale.ROOT);
-    }
-
-    private static String stripExtension(String fileName) {
-        if (fileName == null) {
-            return "";
-        }
-        int dot = fileName.lastIndexOf('.');
-        return dot > 0 ? fileName.substring(0, dot) : fileName;
     }
 
     private static String getString(Cursor cursor, int index) {

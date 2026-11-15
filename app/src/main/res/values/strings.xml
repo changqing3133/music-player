@@ -13,6 +13,8 @@
 
     <string name="scan_local">扫描本地音乐</string>
     <string name="scan">扫描</string>
+    <string name="import_folder">从目录导入</string>
+    <string name="import_folder_unavailable">没有可用的文件选择器，无法选择目录</string>
     <string name="empty_library">还没有歌曲\n点击下方按钮扫描本地音乐</string>
     <string name="permission_denied">未获得音频读取权限，无法扫描本地音乐</string>
     <string name="permission_title">需要访问本地音乐</string>

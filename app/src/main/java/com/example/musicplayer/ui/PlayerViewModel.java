@@ -679,6 +679,35 @@ public class PlayerViewModel extends AndroidViewModel {
         return name.replaceAll("[\\\\/:*?\"<>|]", "_");
     }
 
+    /**
+     * 导入用户选择的目录：先持久化 SAF 读取权限（重启后仍可播放），
+     * 再在 IO 线程扫描该目录、去重后写入曲库。
+     */
+    public void importDirectory(@Nullable Uri treeUri) {
+        if (treeUri == null || Boolean.TRUE.equals(scanning.getValue())) {
+            return;
+        }
+        try {
+            app.getContentResolver().takePersistableUriPermission(
+                    treeUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } catch (SecurityException e) {
+            Log.w(TAG, "无法持久化目录读取权限，重启后可能需要重新选择", e);
+        }
+        scanning.setValue(true);
+        libraryRepository.importDirectory(app, treeUri, (count, error) -> mainHandler.post(() -> {
+            scanning.setValue(false);
+            if (error != null) {
+                message.setValue("目录导入失败："
+                        + (error.getMessage() == null ? "未知错误" : error.getMessage()));
+            } else if (count == 0) {
+                message.setValue("所选目录没有新的音频文件");
+            } else {
+                message.setValue("已从目录导入 " + count + " 首歌曲");
+            }
+            publishState();
+        }));
+    }
+
     public void scanLibrary() {
         if (Boolean.TRUE.equals(scanning.getValue())) {
             return;

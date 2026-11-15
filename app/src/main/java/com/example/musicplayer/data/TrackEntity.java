@@ -12,6 +12,11 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "tracks", indices = {@Index("media_id")})
 public class TrackEntity {
 
+    /** 曲目来源：MediaStore 全盘扫描。 */
+    public static final int SOURCE_MEDIASTORE = 0;
+    /** 曲目来源：用户通过“从目录导入”选择的文件夹。 */
+    public static final int SOURCE_DIRECTORY = 1;
+
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "uri")
@@ -55,6 +60,10 @@ public class TrackEntity {
     /** 仅用于尽力查找同名 .lrc；Android 11+ 分区存储下不保证可读。 */
     @ColumnInfo(name = "data_path")
     private String dataPath;
+
+    /** 曲目来源：0 = MediaStore 扫描，1 = 目录导入。全盘扫描不会删除目录导入的曲目。 */
+    @ColumnInfo(name = "source", defaultValue = "0")
+    private int source = SOURCE_MEDIASTORE;
 
     public TrackEntity() {
     }
@@ -159,5 +168,13 @@ public class TrackEntity {
 
     public void setDataPath(String dataPath) {
         this.dataPath = dataPath;
+    }
+
+    public int getSource() {
+        return source;
+    }
+
+    public void setSource(int source) {
+        this.source = source;
     }
 }

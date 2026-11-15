@@ -1,7 +1,9 @@
 package com.example.musicplayer.ui;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -47,6 +49,14 @@ public class LibraryFragment extends Fragment {
                 }
             });
 
+    private final ActivityResultLauncher<Uri> folderLauncher =
+            registerForActivityResult(new ActivityResultContracts.OpenDocumentTree(), uri -> {
+                if (uri == null || binding == null || !isAdded()) {
+                    return;
+                }
+                viewModel.importDirectory(uri);
+            });
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -81,10 +91,23 @@ public class LibraryFragment extends Fragment {
             boolean running = Boolean.TRUE.equals(scanning);
             binding.progress.setVisibility(running ? View.VISIBLE : View.GONE);
             binding.scanFab.setEnabled(!running);
+            binding.importFolderFab.setEnabled(!running);
         });
 
         binding.scanFab.setOnClickListener(v -> scanWithPermission());
         binding.emptyAction.setOnClickListener(v -> scanWithPermission());
+        binding.importFolderFab.setOnClickListener(v -> openFolderPicker());
+        binding.emptyImport.setOnClickListener(v -> openFolderPicker());
+    }
+
+    /** 打开系统目录选择器；不需要存储权限，读取权限由 SAF 授权。 */
+    private void openFolderPicker() {
+        try {
+            folderLauncher.launch(null);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(requireContext(), R.string.import_folder_unavailable,
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

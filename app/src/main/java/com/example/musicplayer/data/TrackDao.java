@@ -39,12 +39,17 @@ public interface TrackDao {
     @Query("DELETE FROM tracks")
     void deleteAll();
 
+    /** 只删除 MediaStore 扫描的曲目，目录导入的曲目保持不变。 */
+    @Query("DELETE FROM tracks WHERE source = 0")
+    void deleteMediaStoreTracks();
+
     /**
-     * 全量替换。首次扫描与手动刷新都走这里；后续可在此基础上做增量指纹比对。
+     * 全量替换 MediaStore 扫描结果。目录导入的曲目由“从目录导入”单独维护，
+     * 全盘扫描不会把它们清掉。
      */
     @Transaction
     default void replaceAll(List<TrackEntity> tracks) {
-        deleteAll();
+        deleteMediaStoreTracks();
         insertAll(tracks);
     }
 }
