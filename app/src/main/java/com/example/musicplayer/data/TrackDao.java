@@ -18,6 +18,21 @@ public interface TrackDao {
     @Query("SELECT * FROM tracks ORDER BY title COLLATE NOCASE ASC")
     List<TrackEntity> getAll();
 
+    /**
+     * 模糊搜索：标题、艺术家、专辑或文件名包含关键词即可。
+     *
+     * <p>pattern 由 {@link SearchQuery#likePattern(String)} 生成；输入里的 % 与 _
+     * 已经转义，所以这里用 {@code ESCAPE '\'} 声明反斜杠为转义符。LIKE 对 ASCII
+     * 字母不区分大小写，中文按原样匹配。</p>
+     */
+    @Query("SELECT * FROM tracks"
+            + " WHERE title LIKE :pattern ESCAPE '\\'"
+            + " OR artist LIKE :pattern ESCAPE '\\'"
+            + " OR album LIKE :pattern ESCAPE '\\'"
+            + " OR display_name LIKE :pattern ESCAPE '\\'"
+            + " ORDER BY title COLLATE NOCASE ASC")
+    LiveData<List<TrackEntity>> observeMatching(String pattern);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<TrackEntity> tracks);
 

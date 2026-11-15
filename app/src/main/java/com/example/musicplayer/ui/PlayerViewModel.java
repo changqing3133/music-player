@@ -19,6 +19,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.Transformations;
 import androidx.media3.common.C;
 import androidx.media3.common.MediaItem;
 import androidx.media3.common.MediaMetadata;
@@ -87,6 +88,9 @@ public class PlayerViewModel extends AndroidViewModel {
             new MutableLiveData<String>();
 
     private final LiveData<List<TrackEntity>> library;
+    private final MutableLiveData<String> searchQuery = new MutableLiveData<>("");
+    private final LiveData<List<TrackEntity>> searchResults;
+    private String currentSearchQuery = "";
 
     private MediaController controller;
     private ListenableFuture<MediaController> controllerFuture;
@@ -155,6 +159,10 @@ public class PlayerViewModel extends AndroidViewModel {
 
         library = libraryRepository.observeLibrary();
         library.observeForever(libraryObserver);
+
+        // 关键词变化时切换到对应的查询；Room 的 LiveData 会在曲库变化后自动重查
+        searchResults = Transformations.switchMap(searchQuery,
+                query -> libraryRepository.search(query));
 
         connectController();
         mainHandler.post(ticker);
@@ -870,6 +878,24 @@ public class PlayerViewModel extends AndroidViewModel {
 
     public LiveData<List<TrackEntity>> getLibrary() {
         return library;
+    }
+
+    /** 更新搜索关键词；空白输入等价于“显示全部曲目”。 */
+    public void setSearchQuery(@Nullable String query) {
+        String keyword = query == null ? "" : query.trim();
+        if (keyword.equals(currentSearchQuery)) {
+            return;
+        }
+        currentSearchQuery = keyword;
+        searchQuery.setValue(keyword);
+    }
+
+    public String getCurrentSearchQuery() {
+        return currentSearchQuery;
+    }
+
+    public LiveData<List<TrackEntity>> getSearchResults() {
+        return searchResults;
     }
 
     public LiveData<List<LyricLine>> getLyrics() {

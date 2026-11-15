@@ -3,6 +3,7 @@ package com.example.musicplayer.data;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
@@ -25,6 +26,14 @@ public class LibraryRepository {
 
     public LiveData<List<TrackEntity>> observeLibrary() {
         return trackDao.observeAll();
+    }
+
+    /**
+     * 按关键词模糊搜索曲库；关键词为空时返回全部曲目。
+     * 返回的 LiveData 会随 Room 表变化自动刷新，重新扫描后无需手动重查。
+     */
+    public LiveData<List<TrackEntity>> search(@Nullable String query) {
+        return trackDao.observeMatching(SearchQuery.likePattern(query));
     }
 
     public interface Callback {

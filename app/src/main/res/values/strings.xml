@@ -3,7 +3,13 @@
     <string name="app_name">本地音乐</string>
 
     <string name="nav_library">曲库</string>
+    <string name="nav_search">搜索</string>
     <string name="nav_player">正在播放</string>
+
+    <string name="search_hint">搜索歌曲、艺术家或专辑</string>
+    <string name="search_empty">没有找到匹配的歌曲\n换个关键词试试</string>
+    <string name="search_library_empty">曲库还没有歌曲\n先在曲库页扫描本地音乐</string>
+    <string name="search_result_count">共 %1$d 首</string>
 
     <string name="scan_local">扫描本地音乐</string>
     <string name="scan">扫描</string>

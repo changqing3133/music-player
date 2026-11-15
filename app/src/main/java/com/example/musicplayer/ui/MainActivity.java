@@ -27,8 +27,9 @@ import com.example.musicplayer.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG_LIBRARY = "library";
+    private static final String TAG_SEARCH = "search";
     private static final String TAG_PLAYER = "player";
-    private static final String STATE_PLAYER_TAB = "state_player_tab";
+    private static final String STATE_TAB_ID = "state_tab_id";
 
     private ActivityMainBinding binding;
     private PlayerViewModel viewModel;
@@ -50,23 +51,18 @@ public class MainActivity extends AppCompatActivity {
 
         // 冷启动来自“打开方式”时直接进入播放页，避免先 add 曲库页、再叠加播放页
         Uri viewUri = savedInstanceState == null ? viewUriFrom(getIntent()) : null;
-        boolean showPlayer = viewUri != null
-                || (savedInstanceState != null
-                && savedInstanceState.getBoolean(STATE_PLAYER_TAB, false));
-        if (showPlayer) {
+        int initialTab = initialTab(savedInstanceState, viewUri);
+        if (initialTab != R.id.nav_library) {
             // 在注册监听之前恢复选中项，避免重复添加 Fragment
-            binding.bottomNav.setSelectedItemId(R.id.nav_player);
+            binding.bottomNav.setSelectedItemId(initialTab);
         }
 
         binding.bottomNav.setOnItemSelectedListener(item -> {
-            boolean player = item.getItemId() == R.id.nav_player;
-            showTab(player ? TAG_PLAYER : TAG_LIBRARY, player);
-            setTitle(player ? R.string.nav_player : R.string.nav_library);
+            switchTab(item.getItemId());
             return true;
         });
 
-        showTab(showPlayer ? TAG_PLAYER : TAG_LIBRARY, showPlayer);
-        setTitle(showPlayer ? R.string.nav_player : R.string.nav_library);
+        switchTab(initialTab);
 
         viewModel.getMessage().observe(this, msg -> {
             if (msg != null) {
@@ -107,12 +103,44 @@ public class MainActivity extends AppCompatActivity {
         return intent.getData();
     }
 
-    private void showTab(String tag, boolean player) {
+    /** 恢复上次所在的页签；冷启动来自“打开方式”时直接进入播放页。 */
+    private static int initialTab(@Nullable Bundle savedState, @Nullable Uri viewUri) {
+        if (viewUri != null) {
+            return R.id.nav_player;
+        }
+        if (savedState == null) {
+            return R.id.nav_library;
+        }
+        int tab = savedState.getInt(STATE_TAB_ID, R.id.nav_library);
+        return tab == R.id.nav_player || tab == R.id.nav_search ? tab : R.id.nav_library;
+    }
+
+    private void switchTab(int itemId) {
+        if (itemId == R.id.nav_player) {
+            showTab(TAG_PLAYER, R.string.nav_player);
+        } else if (itemId == R.id.nav_search) {
+            showTab(TAG_SEARCH, R.string.nav_search);
+        } else {
+            showTab(TAG_LIBRARY, R.string.nav_library);
+        }
+    }
+
+    private static Fragment createFragment(String tag) {
+        if (TAG_PLAYER.equals(tag)) {
+            return new PlayerFragment();
+        }
+        if (TAG_SEARCH.equals(tag)) {
+            return new SearchFragment();
+        }
+        return new LibraryFragment();
+    }
+
+    private void showTab(String tag, int titleRes) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment target = fragmentManager.findFragmentByTag(tag);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (target == null) {
-            target = player ? new PlayerFragment() : new LibraryFragment();
+            target = createFragment(tag);
             transaction.add(R.id.fragment_container, target, tag);
         } else {
             transaction.show(target);
@@ -123,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         transaction.commit();
+        setTitle(titleRes);
     }
 
     public void openPlayerTab() {
@@ -148,8 +177,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(STATE_PLAYER_TAB,
-                binding != null && binding.bottomNav.getSelectedItemId() == R.id.nav_player);
+        outState.putInt(STATE_TAB_ID,
+                binding == null ? R.id.nav_library : binding.bottomNav.getSelectedItemId());
     }
 
     @Override
