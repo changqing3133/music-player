@@ -19,7 +19,7 @@ import android.widget.TextView;
  * 悬浮歌词窗口（TYPE_APPLICATION_OVERLAY）：
  * - 卡片可拖动，右上角 × 关闭（由播放服务取消开启状态）
  * - 只负责显示，歌词内容由 {@link PlaybackService} 按播放进度推送
- * - 窗口带 FLAG_SHOW_WHEN_LOCKED，部分机型可覆盖锁屏；不能覆盖时由锁屏歌词页兜底
+ * - 窗口带 FLAG_SHOW_WHEN_LOCKED，部分机型上锁屏时也能看到（不保证所有 ROM）
  */
 final class LyricOverlayController {
 

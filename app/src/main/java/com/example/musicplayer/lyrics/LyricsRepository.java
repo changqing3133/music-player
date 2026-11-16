@@ -37,7 +37,7 @@ public final class LyricsRepository {
     }
 
     /**
-     * 只查应用歌词目录。播放服务/锁屏页拿不到 Room 实体时使用，标题与
+     * 只查应用歌词目录。播放服务拿不到 Room 实体时使用，标题与
      * {@link #load(Context, TrackEntity, String, String)} 保持同一命名规则。
      */
     public static List<LyricLine> loadByTitle(Context context, String title, String artist) {

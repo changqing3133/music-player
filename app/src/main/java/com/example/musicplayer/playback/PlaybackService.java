@@ -1,21 +1,16 @@
 package com.example.musicplayer.playback;
 
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.OptIn;
-import androidx.core.content.ContextCompat;
 import androidx.media3.common.AudioAttributes;
 import androidx.media3.common.C;
 import androidx.media3.common.MediaItem;
@@ -33,7 +28,6 @@ import com.example.musicplayer.data.Prefs;
 import com.example.musicplayer.lyrics.LrcParser;
 import com.example.musicplayer.lyrics.LyricsRepository;
 import com.example.musicplayer.model.LyricLine;
-import com.example.musicplayer.ui.LockLyricActivity;
 import com.example.musicplayer.ui.MainActivity;
 
 import java.util.Collections;
@@ -44,7 +38,7 @@ import java.util.concurrent.ExecutorService;
  * 全应用唯一的播放器宿主：
  * - MediaSessionService 提供前台服务、媒体通知、锁屏/蓝牙/耳机线控
  * - ExoPlayer 只在这里创建，UI 全部通过 MediaController 操作
- * - 悬浮歌词与锁屏歌词在服务内跟随播放进度刷新
+ * - 悬浮歌词在服务内跟随播放进度刷新
  */
 @OptIn(markerClass = UnstableApi.class)
 public class PlaybackService extends MediaSessionService {
@@ -64,14 +58,8 @@ public class PlaybackService extends MediaSessionService {
 
     public static final String ACTION_SET_FLOATING_LYRICS =
             "com.example.musicplayer.action.SET_FLOATING_LYRICS";
-    public static final String ACTION_SET_LOCK_LYRICS =
-            "com.example.musicplayer.action.SET_LOCK_LYRICS";
     public static final String ACTION_RELOAD_LYRICS =
             "com.example.musicplayer.action.RELOAD_LYRICS";
-    public static final String ACTION_LOCK_LYRIC_SHOWN =
-            "com.example.musicplayer.action.LOCK_LYRIC_SHOWN";
-    public static final String ACTION_LOCK_LYRIC_CLOSED =
-            "com.example.musicplayer.action.LOCK_LYRIC_CLOSED";
     public static final String EXTRA_ENABLED = "enabled";
 
     private ExoPlayer player;
@@ -86,7 +74,6 @@ public class PlaybackService extends MediaSessionService {
     private List<LyricLine> lyrics = Collections.emptyList();
     private int lyricRequestId;
     private int lastOverlayIndex = Integer.MIN_VALUE;
-    private boolean lockActivityShowing;
 
     private long lastPlayPauseTapAt;
     private final Runnable singleTapAction = new Runnable() {
@@ -102,20 +89,6 @@ public class PlaybackService extends MediaSessionService {
         public void run() {
             updateOverlayForPosition(false);
             mainHandler.postDelayed(this, LYRIC_TICK_MS);
-        }
-    };
-
-    private final BroadcastReceiver screenReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            Log.i(TAG, "screen receiver: " + action);
-            if (Intent.ACTION_SCREEN_OFF.equals(action)) {
-                maybeShowLockLyrics();
-            } else if (Intent.ACTION_USER_PRESENT.equals(action)) {
-                // 锁屏歌词页面自己监听解锁事件，这里仅作为兜底清理状态
-                lockActivityShowing = false;
-            }
         }
     };
 
@@ -155,7 +128,7 @@ public class PlaybackService extends MediaSessionService {
             @Override
             public void onMediaItemTransition(@Nullable MediaItem mediaItem, int reason) {
                 reloadLyrics();
-                if (prefs.isFloatingLyricsEnabled() && !lockActivityShowing) {
+                if (prefs.isFloatingLyricsEnabled()) {
                     showOverlay();
                 }
             }
@@ -170,12 +143,6 @@ public class PlaybackService extends MediaSessionService {
                 .setSessionActivity(buildSessionActivity())
                 .setCallback(new SessionCallback())
                 .build();
-
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Intent.ACTION_SCREEN_OFF);
-        filter.addAction(Intent.ACTION_USER_PRESENT);
-        ContextCompat.registerReceiver(this, screenReceiver, filter,
-                ContextCompat.RECEIVER_NOT_EXPORTED);
 
         if (prefs.isFloatingLyricsEnabled()
                 && player.getMediaItemCount() > 0
@@ -212,22 +179,8 @@ public class PlaybackService extends MediaSessionService {
             case ACTION_SET_FLOATING_LYRICS:
                 setFloatingLyrics(intent.getBooleanExtra(EXTRA_ENABLED, false));
                 return true;
-            case ACTION_SET_LOCK_LYRICS:
-                prefs.setLockLyricsEnabled(intent.getBooleanExtra(EXTRA_ENABLED, false));
-                return true;
             case ACTION_RELOAD_LYRICS:
                 reloadLyrics();
-                return true;
-            case ACTION_LOCK_LYRIC_SHOWN:
-                lockActivityShowing = true;
-                overlay.hide();
-                stopLyricTicker();
-                return true;
-            case ACTION_LOCK_LYRIC_CLOSED:
-                lockActivityShowing = false;
-                if (prefs.isFloatingLyricsEnabled()) {
-                    showOverlay();
-                }
                 return true;
             default:
                 return false;
@@ -346,37 +299,6 @@ public class PlaybackService extends MediaSessionService {
                 updateOverlayForPosition(true);
             });
         });
-    }
-
-    // ==================== 锁屏歌词 ====================
-
-    private void maybeShowLockLyrics() {
-        boolean enabled = prefs != null && prefs.isLockLyricsEnabled();
-        boolean canOverlay = Settings.canDrawOverlays(this);
-        boolean playing = player != null && player.isPlaying();
-        int lyricCount = lyrics == null ? -1 : lyrics.size();
-        Log.i(TAG, "maybeShowLockLyrics enabled=" + enabled
-                + " canDrawOverlays=" + canOverlay
-                + " playing=" + playing
-                + " lyrics=" + lyricCount);
-        if (!enabled || player == null) {
-            return;
-        }
-        // 后台启动 Activity 的豁免依赖“悬浮窗”权限，未授权时宁可不弹
-        if (!canOverlay) {
-            return;
-        }
-        if (!playing || lyrics.isEmpty()) {
-            return;
-        }
-        Intent intent = new Intent(this, LockLyricActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        try {
-            startActivity(intent);
-            Log.i(TAG, "lock lyric activity requested");
-        } catch (Exception e) {
-            Log.w(TAG, "无法显示锁屏歌词页面", e);
-        }
     }
 
     // ==================== 媒体按键 ====================
@@ -543,11 +465,6 @@ public class PlaybackService extends MediaSessionService {
     @Override
     public void onDestroy() {
         mainHandler.removeCallbacksAndMessages(null);
-        try {
-            unregisterReceiver(screenReceiver);
-        } catch (Exception ignored) {
-            // 未注册成功时忽略
-        }
         if (overlay != null) {
             overlay.hide();
         }

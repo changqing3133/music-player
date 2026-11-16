@@ -40,18 +40,6 @@
             </intent-filter>
         </activity>
 
-        <!-- 锁屏歌词：由播放服务在熄屏时拉起，覆盖在锁屏之上 -->
-        <activity
-            android:name=".ui.LockLyricActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:excludeFromRecents="true"
-            android:exported="false"
-            android:launchMode="singleTop"
-            android:showWhenLocked="true"
-            android:taskAffinity="com.example.musicplayer.locklyric"
-            android:theme="@style/Theme.MusicPlayer.LockLyric"
-            android:turnScreenOn="false" />
-
         <!-- 导出以支持系统媒体控制、Android Auto 等外部 MediaController -->
         <service
             android:name=".playback.PlaybackService"

@@ -646,7 +646,7 @@ public class PlayerViewModel extends AndroidViewModel {
                 mainHandler.post(() -> {
                     message.setValue("歌词已导入：" + fileName);
                     loadLyrics(item);
-                    // 通知播放服务重新读取歌词，悬浮/锁屏歌词立即生效
+                    // 通知播放服务重新读取歌词，悬浮歌词立即生效
                     try {
                         app.startService(new Intent(app, PlaybackService.class)
                                 .setAction(PlaybackService.ACTION_RELOAD_LYRICS));

@@ -19,8 +19,6 @@ public class Prefs {
     private static final String KEY_AUDIO_PERMISSION_ASKED = "audio_permission_asked";
     private static final String KEY_NOTIFICATION_ASKED = "notification_asked";
     private static final String KEY_FLOATING_LYRICS = "floating_lyrics_enabled";
-    private static final String KEY_LOCK_LYRICS = "lock_lyrics_enabled";
-    private static final String KEY_VIVO_LOCK_TIP_SHOWN = "vivo_lock_tip_shown";
 
     private final SharedPreferences prefs;
 
@@ -82,21 +80,5 @@ public class Prefs {
 
     public void setFloatingLyricsEnabled(boolean enabled) {
         prefs.edit().putBoolean(KEY_FLOATING_LYRICS, enabled).apply();
-    }
-
-    public boolean isLockLyricsEnabled() {
-        return prefs.getBoolean(KEY_LOCK_LYRICS, false);
-    }
-
-    public void setLockLyricsEnabled(boolean enabled) {
-        prefs.edit().putBoolean(KEY_LOCK_LYRICS, enabled).apply();
-    }
-
-    public boolean wasVivoLockTipShown() {
-        return prefs.getBoolean(KEY_VIVO_LOCK_TIP_SHOWN, false);
-    }
-
-    public void markVivoLockTipShown() {
-        prefs.edit().putBoolean(KEY_VIVO_LOCK_TIP_SHOWN, true).apply();
     }
 }
